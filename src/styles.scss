@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+/* Variables por defecto (Modo Claro) */
+:root {
+  --bg-color: #f0f2f5;
+  --text-color: #1c1e21;
+  --card-bg: #ffffff;
+  --primary-color: #0866ff;
+  --border-color: #ddd;
+}
+
+/* Detectar la configuración del dispositivo (Modo Oscuro) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #18191a;
+    --text-color: #e4e6eb;
+    --card-bg: #242526;
+    --primary-color: #2d88ff;
+    --border-color: #3e4042;
+  }
+}
+
+/* Aplicar las variables globalmente */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease;
+}
+
+/* Clases de utilidad que puedes usar en cualquier componente */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
