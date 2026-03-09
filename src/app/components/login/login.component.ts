@@ -1,0 +1,50 @@
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { JsonPipe } from '@angular/common';
+
+
+@Component({
+  selector: 'app-login',
+  standalone : true,
+  imports: [ReactiveFormsModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
+})
+
+export class LoginComponent {
+  //se inyectan las importaciones
+  private fb =  inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  // se agregan validaciones 
+  loginForm : FormGroup = this.fb.group({
+    email : ['' , [Validators.required, Validators.email]],
+    password : ['' , [Validators.required]]
+  });
+
+
+  //Al enviar
+  onSubmit(){
+    if (this.loginForm.valid){
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) =>{
+          if(response.status === true){
+
+            localStorage.setItem('userSession', JSON.stringify(response.value));
+            this.router.navigate(['/dashboard']);
+            console.log("login exitoso" ,response);
+            //alert("Welcome");
+          }
+          
+        },
+        error: (err) =>{
+          console.error("error de autenficacion", err);
+          alert("No se pudo iniciar sesion");
+        }
+      })
+    }
+  }
+}
