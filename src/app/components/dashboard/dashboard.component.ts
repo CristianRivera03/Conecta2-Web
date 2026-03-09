@@ -2,12 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PostService } from '../../services/post.service';
-PostService
+import { PostCreateDTO, PostDTO } from '../../models/post';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -20,34 +21,71 @@ export class DashboardComponent {
 
   //usuario actual
   currentUser: any = null;
-  post: any[] = [];
+  posts: PostDTO[] = [];
 
+  //Formulario
   postForm: FormGroup = this.fb.group({
-    content: ['', Validators.required, Validators.maxLength(500)]
+    titlePost: ['', [Validators.required, Validators.maxLength(100)]],
+    contentPost: ['', [Validators.required, Validators.maxLength(500)]],
+    idCategory: [6, [Validators.required]]
   });
 
   ngOnInit() {
     this.loadUserSession();
-    this.loadPost();
+    if (this.currentUser){
+      this.loadPosts(); // solo mostrara los posts si hay alguien logeado
+    }
   }
 
-  loadUserSession(){
+  loadUserSession() {
     const sessionData = localStorage.getItem("userSession");
-    if (sessionData){
+    if (sessionData) {
       this.currentUser = JSON.parse(sessionData);
-    }else{
+    } else {
       this.router.navigate(["/login"]);
     }
   }
 
-  loadPost(){
-    this.postService.getAllPosts().subscribe(data => this.post = data);
-    console.log("cargando data");
+  loadPosts() {
+    this.postService.getAllPosts().subscribe({
+      next:  (res) => {
+        console.log("imprimiendo res" ,res.value)
+        this.posts = res.value;
+      },
+      error : (err) =>{
+        console.error("Error al cargar los post ", err)
+      }
+    });
   }
 
-  
 
+  createPost(){
+    if(this.postForm.valid){ //si el post es valido que haga todo esto
+      //armar formato json para la api
+      const newPost : PostCreateDTO ={
+        idUser : this.currentUser.idUser,
+        idCategory : this.postForm.value.idCategory,
+        titlePost : this.postForm.value.titlePost,
+        contentPost : this.postForm.value.contentPost
+      };
 
+      this.postService.createPost(newPost).subscribe({
+        next : (response) =>{
+          console.log("Publicacion exitosa", response);
+          
+          this.postForm.reset({idCategory : 6}); //limpiando el formularioo
+          this.loadPosts();
+        },
+        error: (err) =>{
+          console.error("Error al publicar" , err);
+          alert("Hubo un problema al crear la publicacion")
+        }
+      });
+    }
+  }
 
-
+  logout(){
+    localStorage.removeItem("userSession");
+    this.router.navigate(["/login"]);
+  }
 }

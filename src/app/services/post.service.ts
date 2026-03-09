@@ -16,8 +16,8 @@ export class PostService {
   constructor() {}
 
   //Traer todas las publicaciones
-  getAllPosts() :  Observable<PostDTO[]>{
-    return this.http.get<PostDTO[]>(`${this.apiURL}/Get`)
+  getAllPosts() :  Observable<any>{
+    return this.http.get<any>(`${this.apiURL}/Get`)
   }
 
   //Metodo para crear post
