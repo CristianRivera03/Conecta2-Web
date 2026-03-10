@@ -5,7 +5,7 @@
         </div>
 
         <div class="user-profile">
-            <span>Bienvenido, <strong>{{currentUser?.nameUser}} {{currentUser?.lastnameUser}}</strong></span>
+            <span>Bienvenido, <strong>{{currentUser?.nameUser}} {{currentUser?.lastNameUser}}</strong></span>
             <button class="btn-logout" (click)="logout()" >Cerrar Sesión</button>
         </div>
     </header>
@@ -60,6 +60,18 @@
                         <!-- cuerpo de publicacion -->
                         <h3>{{post.titlePost}}</h3>
                         <p>{{post.contentPost}}</p>
+
+                        <div class="post-actions">
+                            @if(
+                                currentUser?.roleName === "Admin" ||
+                                currentUser?.roleName === "Moderator" ||
+                                currentUser?.idUser === post.idUser
+                            ){
+                                <button class="btn-danger" (click)="deletePost(post.idPost)">
+                                    Eliminar post
+                                </button>
+                            }
+                        </div>
 
                     </article>
                 }@empty {

@@ -1,0 +1,32 @@
+<div class="layout-wrapper">
+    <aside class="sidebar card">
+        <div class="sidebar-brand">
+            <h2>Conecta2</h2>
+        </div>
+
+        <nav class ="sidebar-nav">
+            <a routerLink="/dashboard/feed" routerLinkActive="active" class="nav-item">
+                Muro Principal
+            </a>
+            
+            @if (currentUser?.roleName === "Admin") {
+                <a routerLink="/dashboard/manager-users" routerLinkActive="active" class="nav-item">
+                Gestion de Usuarios
+            </a>
+            }
+        </nav>
+
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <span class="user-avatar">{{currentUser?.nameUser?.charAt(0)}}</span>
+                <small>{{currentUser?.nameUser}} {{currentUser?.lastNameUser}}</small>    
+            </div>
+            <button class="btn-logout" (click)="logout()" >Cerrar Sesion</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

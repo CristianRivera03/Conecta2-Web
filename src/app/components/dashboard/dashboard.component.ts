@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PostService } from '../../services/post.service';
 import { PostCreateDTO, PostDTO } from '../../models/post';
 import { CommonModule } from '@angular/common';
+import { SessionDTO } from '../../models/session';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardComponent {
   private postService = inject(PostService);
 
   //usuario actual
-  currentUser: any = null;
+  currentUser: SessionDTO | null = null;
   posts: PostDTO[] = [];
 
   //Formulario
@@ -60,7 +61,7 @@ export class DashboardComponent {
 
 
   createPost(){
-    if(this.postForm.valid){ //si el post es valido que haga todo esto
+    if(this.postForm.valid && this.currentUser){ //si el post es valido que haga todo esto
       //armar formato json para la api
       const newPost : PostCreateDTO ={
         idUser : this.currentUser.idUser,
@@ -81,6 +82,23 @@ export class DashboardComponent {
           alert("Hubo un problema al crear la publicacion")
         }
       });
+    }
+  }
+
+
+  deletePost(idPost : string){
+    const confirmation = confirm("Estas seguro de eliminar esta publicacion?")
+    if(confirmation){
+      this.postService.deletePost(idPost).subscribe({
+        next : (response) =>{
+          console.log("Publicacion eliminada", response);
+          this.loadPosts()
+        },
+        error : (err) =>{
+          console.error("Error al eliminar", err);
+          alert("No tienes los permisos para borrar esta publicacion")
+        }
+      })
     }
   }
 

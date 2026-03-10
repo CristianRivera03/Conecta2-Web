@@ -1,0 +1,54 @@
+<div class="users-container">
+    <header class="navbar card">
+        <div class="logo">
+            <h1>Conecta2</h1>
+        </div>
+
+        <div class="user-profile">
+            <span>Bienvenido, <strong>{{currentUser?.nameUser}} {{currentUser?.lastNameUser}}</strong></span>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+
+
+        <!-- listado de usuarios -->
+        <section class="feed-section">
+            <h2>Ultimas publicaciones</h2>
+
+            <div class="user-grid">
+                @for (user of users; track user.idUser) {
+                    <article class="user-card card">
+                        <div class="user-header">
+                            <div class="author-info">
+                                <strong>{{user.nameUser}}</strong>
+                                <span class="category-badge">{{user.lastNameUser}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="user-actions">
+                            @if(
+                                currentUser?.roleName === "Admin" ||
+                                currentUser?.roleName === "Moderator" ||
+                                currentUser?.idUser === user.idUser
+                            ){
+                                <!-- <button class="btn-danger" (click)="deleteuser(user.iduser)">
+                                    Eliminar user
+                                </button> -->
+                            }
+                        </div>
+
+                    </article>
+                }@empty {
+                    <div class="empty-state card">
+
+                        <p>Aun no hay usuarios registrados</p>
+
+                    </div>
+                }
+            </div>
+        </section>
+
+    </main>
+</div>

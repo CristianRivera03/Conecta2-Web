@@ -24,4 +24,9 @@ export class PostService {
   createPost(post : PostCreateDTO) : Observable<any>{
     return this.http.post(`${this.apiURL}/Create` ,post);
   }
+
+  //Borrar Post
+  deletePost(idPost : string) : Observable<any>{
+    return this.http.delete(`${this.apiURL}/Delete/${idPost}`)
+  }
 }
