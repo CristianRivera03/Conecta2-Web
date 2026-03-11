@@ -19,7 +19,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
     if(!expectedRoles || expectedRoles.includes(user.roleName)){
       return true;
     }else{
-      alert("What do you looking for?")
+      alert("What do you looking for nigga?")
       router.navigate(["/dashboard/feed"]);
       return false;
     }

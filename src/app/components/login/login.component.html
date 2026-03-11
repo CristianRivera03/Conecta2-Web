@@ -2,8 +2,9 @@
 
 <div class="bg-main min-h-screen flex justify-center items-center transition-colors duration-300">
     
-    <div class="bg-card flex shadow-lg max-w-3xl p-5 rounded-2xl transition-colors duration-300 border border-border-main">
-        
+    <div class="bg-card flex shadow-lg max-w-3xl p-16 rounded-2xl transition-colors duration-300 border border-border-main">
+
+        <!-- formulario -->
         <div class="sm:w-1/2 px-16 flex flex-col justify-center">
             <h2 class="font-bold text-2xl text-brand">Login</h2>
             <p class="text-sm mt-4 text-text-main">Si ya tienes una cuenta puedes acceder con tu correo electrónico</p>
@@ -46,9 +47,43 @@
             </button>
         </div>
 
-        <div class="sm:block hidden w-1/2">
-            <img class="rounded-2xl h-full w-full object-cover" src="/photo/login-photo.jpg" alt="Login">
+
+        <!-- imagen -->
+        <div class="sm:block hidden w-1/2 relative">
+            
+            <img 
+              class="absolute inset-0 rounded-2xl h-full w-full object-cover transition-opacity duration-1000 ease-in-out" 
+              src="/photo/login-photo.jpg" 
+              alt="Login Light"
+              [class.opacity-100]="!isDarkMode"
+              [class.opacity-0]="isDarkMode">
+
+            <img 
+              class="absolute inset-0 rounded-2xl h-full w-full object-cover transition-opacity duration-1000 ease-in-out" 
+              src="/photo/login-photo-night.png" 
+              alt="Login Dark"
+              [class.opacity-100]="isDarkMode"
+              [class.opacity-0]="!isDarkMode">
         </div>
+
+        
     </div>
     
+
+    <button 
+                  type="button"
+                  (click)="toggleTheme()" 
+                  class="p-2 rounded-full bg-input border border-border-main shadow-sm hover:opacity-80 transition-all duration-300 flex items-center justify-center">
+                  
+                  @if(isDarkMode) {
+                    <span class="material-symbols-outlined text-yellow-400">light_mode</span>
+                  } @else {
+                    <span class="material-symbols-outlined text-brand transition-colors">dark_mode</span>
+                  }
+                </button>
 </div>
+
+
+
+
+                

@@ -1,10 +1,7 @@
-<div class="dashboard-container">
-    <header class="navbar card">
-        <div class="logo">
-            <h1>Conecta2</h1>
-        </div>
+<div class="bg-main">
+    <header class="">
 
-        <div class="user-profile">
+        <div class="text-brand">
             <span>Bienvenido, <strong>{{currentUser?.nameUser}} {{currentUser?.lastNameUser}}</strong></span>
             <button class="btn-logout" (click)="logout()" >Cerrar Sesión</button>
         </div>
@@ -42,12 +39,12 @@
 
 
         <!-- sección de publicaciones -->
-        <section class="feed-section">
+        <section class="text-white">
             <h2>Ultimas publicaciones</h2>
 
             <div class="post-grid">
                 @for (post of posts; track post.idPost) {
-                    <article class="post-card card">
+                    <article class="p-4 bg-card my-2 rounded-xl">
                         <div class="post-header">
                             <div class="author-info">
                                 <span class="avatar">{{post.completeNameUser.charAt(0)}}</span>
