@@ -1,37 +1,31 @@
-/* Variables por defecto (Modo Claro) */
-:root {
-  --bg-color: #f0f2f5;
-  --text-color: #1c1e21;
-  --card-bg: #ffffff;
-  --primary-color: #0866ff;
-  --border-color: #ddd;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Detectar la configuración del dispositivo (Modo Oscuro) */
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --bg-color: #18191a;
-    --text-color: #e4e6eb;
-    --card-bg: #242526;
-    --primary-color: #2d88ff;
-    --border-color: #3e4042;
+    --bg-main: #f9fafb; /* bg-gray-50 */
+    --bg-card: #f3f4f6; /* bg-gray-100 */
+    --bg-input: #ffffff; /* Blanco para inputs y botones secundarios */
+    --brand: #2a69a5; /* Tu azul característico */
+    --text-main: #1f2937; /* Gris muy oscuro para lectura */
+    --text-muted: #9ca3af; /* text-gray-400 para textos secundarios */
+    --border-main: #e5e7eb; /* Bordes suaves */
+  }
+
+  /* MODO OSCURO (Colores adaptados) */
+  .dark {
+    --bg-main: #0f172a; /* Azul noche muy oscuro */
+    --bg-card: #1e293b; /* Tarjeta ligeramente más clara para resaltar */
+    --bg-input: #334155; /* Inputs grises oscuros */
+    --brand: #3b82f6; /* Un azul ligeramente más brillante para contrastar en fondo oscuro */
+    --text-main: #f8fafc; /* Texto casi blanco */
+    --text-muted: #94a3b8; /* Texto secundario claro */
+    --border-main: #475569; /* Bordes visibles pero discretos */
   }
 }
 
-/* Aplicar las variables globalmente */
+/* Transición suave al cambiar de tema */
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  transition: background-color 0.3s ease;
-}
-
-/* Clases de utilidad que puedes usar en cualquier componente */
-.card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
+  @apply bg-main text-main transition-colors duration-300;
 }
