@@ -4,11 +4,13 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ManagerUserComponent } from './components/manager-user/manager-user.component';
 import { roleGuard } from './guards/role.guard';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
+    {path: "signup" , component: SignUpComponent},
 
     //Ruta padre 
     {

@@ -1,21 +1,22 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
+  selector: 'app-sign-up',
   imports: [ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss'
 })
+export class SignUpComponent implements OnInit {
 
-export class LoginComponent implements OnInit {
-  //se inyectan las importaciones
-
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+  private router = inject(Router);
   isDarkMode: boolean = false;
+
 
   ngOnInit(): void {
     const savedTheme = localStorage.getItem("theme");
@@ -31,41 +32,45 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
-  private router = inject(Router);
 
-  // se agregan validaciones 
-  loginForm: FormGroup = this.fb.group({
+  signUpForm: FormGroup = this.fb.group({
+    userName :['', [Validators.required]],
+    nameUser :['', [Validators.required]],
+    lastNameUser :['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
   });
 
 
-  //Al enviar
   onSubmit() {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
+    if (this.signUpForm.valid) {
+      //se recepta el formulario
+      const dataForm = this.signUpForm.value
+    
+    this.userService.signUp(this.signUpForm.value).subscribe({
         next: (response) => {
           if (response.status === true) {
-
-            localStorage.setItem('userSession', JSON.stringify(response.value));
-            this.router.navigate(['/dashboard']);
-            console.log("login exitoso", response);
+            alert("¡Cuenta creada! exitosamente");
+            this.router.navigate(['/login']);
             //alert("Welcome");
+          }else{
+            alert("Error al registrar");
+            console.error("error" ,response.status);
+            
           }
 
         },
         error: (err) => {
-          console.error("error de autenficacion", err);
-          alert("No se pudo iniciar sesion");
+          console.error("error de al crear el usuario", err);
+          alert("No se pudo crear el usuario");
         }
       })
+    }else{
+      this.signUpForm.markAllAsTouched();
     }
   }
 
 
-  //cambiar el theme
   toggleTheme() : void{
     // cambia el estado por el inverso
     this.isDarkMode = !this.isDarkMode;
@@ -79,7 +84,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  goSignUp(){
-    this.router.navigate(['/signup']); 
+  goLogin(){
+    this.router.navigate(['/login']);
   }
+
+
 }

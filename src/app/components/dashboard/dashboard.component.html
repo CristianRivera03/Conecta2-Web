@@ -32,7 +32,7 @@
 
                 <!-- boton para crear -->
                 <div class="form-actions">
-                    <button type="submit" [disabled]="postForm.invalid" class="btn-primary">Publicar</button>
+                    <button class="bg-brand px-4 py-2 rounded-xl text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50 mt-2" type="submit" [disabled]="postForm.invalid">Publicar</button>
                 </div>
             </form>
         </section>
@@ -64,7 +64,7 @@
                                 currentUser?.roleName === "Moderator" ||
                                 currentUser?.idUser === post.idUser
                             ){
-                                <button class="btn-danger" (click)="deletePost(post.idPost)">
+                                <button class="bg-brand" (click)="deletePost(post.idPost)">
                                     Eliminar post
                                 </button>
                             }

@@ -2,10 +2,10 @@
 
 <div class="bg-main min-h-screen flex justify-center items-center transition-colors duration-300">
     
-    <div class="bg-card flex shadow-lg max-w-3xl p-16 rounded-2xl transition-colors duration-300 border border-border-main">
+<div class="bg-card grid grid-cols-1 md:grid-cols-2 gap-8 shadow-2xl w-full max-w-5xl p-10 rounded-3xl border border-border-main transition-colors duration-300">
 
         <!-- formulario -->
-        <div class="sm:w-1/2 px-16 flex flex-col justify-center">
+        <div class="px-4 flex flex-col justify-center">
             <h2 class="font-bold text-2xl text-brand">Login</h2>
             <p class="text-sm mt-4 text-text-main">Si ya tienes una cuenta puedes acceder con tu correo electrónico</p>
             
@@ -13,7 +13,7 @@
             
                 <div class="mt-8">
                     <input class="p-2 rounded-xl border border-border-main bg-input text-text-main w-full placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand" 
-                           type="email" formControlName="email" placeholder="tucorreo@mail.com">
+                    type="email" formControlName="email" placeholder="tucorreo@mail.com">
                     @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched){
                         <small class="text-red-500 mt-1 block">Ingresa un correo válido</small>
                     }
@@ -37,7 +37,7 @@
                 <hr class="border-border-main">
             </div>
 
-            <button class="bg-input border border-border-main text-text-main py-2 w-full rounded-xl mt-5 flex justify-center items-center gap-2 hover:bg-main transition-colors">
+            <button (click)="goSignUp()" class="bg-input border border-border-main text-text-main py-2 w-full rounded-xl mt-5 flex justify-center items-center gap-2 hover:bg-main transition-colors">
                 Registrar
                 <span class="material-symbols-outlined">person_add</span>
             </button>
@@ -49,7 +49,7 @@
 
 
         <!-- imagen -->
-        <div class="sm:block hidden w-1/2 relative">
+        <div class="sm:block hidden  relative">
             
             <img 
               class="absolute inset-0 rounded-2xl h-full w-full object-cover transition-opacity duration-1000 ease-in-out" 
@@ -71,16 +71,16 @@
     
 
     <button 
-                  type="button"
-                  (click)="toggleTheme()" 
-                  class="p-2 rounded-full bg-input border border-border-main shadow-sm hover:opacity-80 transition-all duration-300 flex items-center justify-center">
-                  
-                  @if(isDarkMode) {
-                    <span class="material-symbols-outlined text-yellow-400">light_mode</span>
-                  } @else {
-                    <span class="material-symbols-outlined text-brand transition-colors">dark_mode</span>
-                  }
-                </button>
+        type="button"
+        (click)="toggleTheme()" 
+        class="p-2 rounded-full bg-input border border-border-main shadow-sm hover:opacity-80 transition-all duration-300 flex items-center justify-center">
+        
+        @if(isDarkMode) {
+        <span class="material-symbols-outlined text-yellow-400">light_mode</span>
+        } @else {
+        <span class="material-symbols-outlined text-brand transition-colors">dark_mode</span>
+        }
+    </button>
 </div>
 
 
